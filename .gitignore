@@ -16,6 +16,9 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+.env
+.env.production
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -26,3 +29,6 @@ pnpm-lock.yaml
 *.njsproj
 *.sln
 *.sw?
+
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
