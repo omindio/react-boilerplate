@@ -8,7 +8,7 @@ export const staticReducers = {
 
 export function createRootReducer(dynamicReducers: { [key: string]: Reducer }) {
   return combineReducers({
-    ...staticReducers,      
-    ...dynamicReducers,     
+    ...staticReducers,
+    ...dynamicReducers,
   });
 }

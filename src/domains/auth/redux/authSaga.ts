@@ -8,12 +8,19 @@ import {
   logoutFailure,
   checkAuthStatusSuccess,
   checkAuthStatusFailure,
-  checkAuthStatus
+  checkAuthStatus,
 } from './authSlice';
-import { loginUser, logoutUser, checkAuthStatus as checkAuthStatusApi } from '../api/authApi';
+import {
+  loginUser,
+  logoutUser,
+  checkAuthStatus as checkAuthStatusApi,
+} from '../api/authApi';
 
 //TODO: Comprobar los payloads de las acciones y la gestion de errores
-function* handleLogin(action: ReturnType<typeof loginRequest>): Generator<any, void> {
+//TODO: Redirigir al dashboard despues del login
+function* handleLogin(
+  action: ReturnType<typeof loginRequest>
+): Generator<any, void> {
   try {
     const response = yield call(loginUser, action.payload);
     yield put(loginSuccess(response.data));
@@ -36,7 +43,9 @@ function* handleCheckAuthStatus(): Generator<any, void> {
     const response = yield call(checkAuthStatusApi);
     yield put(checkAuthStatusSuccess(response.data));
   } catch (error: any) {
-    yield put(checkAuthStatusFailure(error.message || 'Failed to check auth status')); // En caso de error
+    yield put(
+      checkAuthStatusFailure(error.message || 'Failed to check auth status')
+    ); // En caso de error
   }
 }
 

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, ConfigProvider } from 'antd';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+
+import MainRoutes from './routes/MainRoutes';
 
 const App: React.FC = () => (
   <ConfigProvider
@@ -14,8 +17,10 @@ const App: React.FC = () => (
       },
     }}
   >
-      <Button type="primary">Button</Button>
+    <Router>
+      <MainRoutes />
+    </Router>
   </ConfigProvider>
 );
 
-export default App
+export default App;
