@@ -32,3 +32,4 @@ pnpm-lock.yaml
 
 tsconfig.app.tsbuildinfo
 tsconfig.node.tsbuildinfo
+tsconfig.tsbuildinfo

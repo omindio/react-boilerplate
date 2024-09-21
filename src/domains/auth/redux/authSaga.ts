@@ -6,14 +6,17 @@ import {
   logoutRequest,
   logoutSuccess,
   logoutFailure,
+  checkAuthStatusSuccess,
+  checkAuthStatusFailure,
+  checkAuthStatus
 } from './authSlice';
-import { loginUser, logoutUser } from '../api/authApi';
+import { loginUser, logoutUser, checkAuthStatus as checkAuthStatusApi } from '../api/authApi';
 
-function* handleLogin(action: ReturnType<typeof loginRequest>): Generator<any, void, any> {
+//TODO: Comprobar los payloads de las acciones y la gestion de errores
+function* handleLogin(action: ReturnType<typeof loginRequest>): Generator<any, void> {
   try {
     const response = yield call(loginUser, action.payload);
-    const { user, token } = response.data;
-    yield put(loginSuccess({ user, token }));
+    yield put(loginSuccess(response.data));
   } catch (error: any) {
     yield put(loginFailure(error.response?.data?.message || 'Login failed'));
   }
@@ -28,8 +31,18 @@ function* handleLogout() {
   }
 }
 
+function* handleCheckAuthStatus(): Generator<any, void> {
+  try {
+    const response = yield call(checkAuthStatusApi);
+    yield put(checkAuthStatusSuccess(response.data));
+  } catch (error: any) {
+    yield put(checkAuthStatusFailure(error.message || 'Failed to check auth status')); // En caso de error
+  }
+}
+
 // Watcher Saga
 export default function* authSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(logoutRequest.type, handleLogout);
+  yield takeLatest(checkAuthStatus.type, handleCheckAuthStatus);
 }

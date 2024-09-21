@@ -10,6 +10,6 @@ WORKDIR /app
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3000 3010
 
 #CMD ["npm", "run", "dev"]
