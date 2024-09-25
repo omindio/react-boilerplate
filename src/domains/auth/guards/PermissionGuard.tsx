@@ -22,7 +22,7 @@ const PermissionGuard: React.FC<PermissionGuardProps> = ({
     userPermissions.includes(perm)
   );
 
-  if (!hasRequiredRole && !hasRequiredPermission) {
+  if (allowedRoles && !hasRequiredRole && !hasRequiredPermission) {
     return <Navigate to="/unauthorized" />;
   }
 

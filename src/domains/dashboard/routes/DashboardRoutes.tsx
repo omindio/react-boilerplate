@@ -1,16 +1,14 @@
-import { RouteObject } from "react-router-dom";
+import { RouteObject } from 'react-router-dom';
 
-import AdminDashboardPage from "../pages/AdminDashboardPage";
-import PermissionGuard from "@domains/auth/guards/PermissionGuard";
+import AdminDashboardPage from '../pages/AdminDashboardPage';
+import PermissionGuard from '@domains/auth/guards/PermissionGuard';
 
 const DashboardRoutes: RouteObject[] = [
-    {
-        path: '/dashboard',
-        element: <PermissionGuard allowedRoles={['admin']} />, // Solo admin
-        children: [
-            { path: '', element: <AdminDashboardPage /> },
-        ],
-    }
+  {
+    path: '/dashboard',
+    element: <PermissionGuard allowedRoles={['admin']} />,
+    children: [{ path: '', element: <AdminDashboardPage /> }],
+  },
 ];
 
 export default DashboardRoutes;

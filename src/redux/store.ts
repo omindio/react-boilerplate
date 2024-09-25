@@ -1,22 +1,29 @@
 import { configureStore, Reducer } from '@reduxjs/toolkit';
 import createSagaMiddleware, { Task } from 'redux-saga';
 import { useDispatch } from 'react-redux';
+import { persistStore, persistReducer } from 'redux-persist';
 import { createRootReducer } from './rootReducer';
 import rootSaga from './rootSaga';
+import persistConfig from './persistConfig';
 
 const asyncReducers: Record<string, Reducer> = {};
 const asyncSagas: Record<string, Task> = {};
 
 const sagaMiddleware = createSagaMiddleware();
 
+const rootReducer = createRootReducer(asyncReducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer as Reducer);
+
 const store = configureStore({
-  reducer: createRootReducer(asyncReducers),
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
   devTools: import.meta.env.MODE !== 'production',
 });
 
 sagaMiddleware.run(rootSaga);
+
+export const persistor = persistStore(store);
 
 export const injectReducer = (key: string, reducer: Reducer) => {
   if (!asyncReducers[key]) {
