@@ -16,7 +16,7 @@ const useAuthCheck = () => {
 
     const interval = setInterval(() => {
       dispatch(checkAuthStatus());
-    }, 300000);
+    }, 1100000);
 
     return () => {
       clearInterval(interval);

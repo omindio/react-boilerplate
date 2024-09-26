@@ -13,9 +13,6 @@ const App: React.FC = () => (
       token: {
         colorPrimary: '#00b96b',
         borderRadius: 5,
-
-        // Alias Token
-        //colorBgContainer: '#f6ffed',
       },
     }}
   >
