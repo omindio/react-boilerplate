@@ -58,7 +58,7 @@ const LoginPage: React.FC = () => {
           </Form.Item>
 
           <Form.Item>
-            <Link to="/forgot-password" style={{ float: 'right' }}>
+            <Link to="/forgot-password">
               Recuperar la contraseña
             </Link>
           </Form.Item>
