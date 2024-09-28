@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Form, Input, Button, message } from 'antd';
-import { Link } from 'react-router-dom';
+import { Form, Input, Button, message, Divider } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@redux/store';
-import { loginRequest } from '../redux/authSlice';
+import { loginRequest, clearStatus } from '../redux/authSlice';
 
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 
 const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -21,8 +22,15 @@ const LoginPage: React.FC = () => {
   useEffect(() => {
     if (error) {
       message.error(error, 5);
+      dispatch(clearStatus());
     }
   }, [error]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearStatus());
+    };
+  }, [dispatch]);
 
   const onFinish = (values: { email: string; password: string }) => {
     dispatch(loginRequest(values));
@@ -56,16 +64,15 @@ const LoginPage: React.FC = () => {
               placeholder="Contraseña"
             />
           </Form.Item>
-
-          <Form.Item>
-            <Link to="/forgot-password">
-              Recuperar la contraseña
-            </Link>
-          </Form.Item>
-
           <Form.Item>
             <Button type="primary" htmlType="submit" block loading={loading}>
               Iniciar Sesión
+            </Button>
+          </Form.Item>
+          <Divider>o</Divider>
+          <Form.Item>
+            <Button block onClick={() => navigate('/forgot-password')}>
+              Recuperar la contraseña
             </Button>
           </Form.Item>
         </Form>

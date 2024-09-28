@@ -15,6 +15,7 @@ const CardStyled = styled(Card).withConfig({
 `;
 const TitleStyled = styled(Typography.Title)`
   text-align: center;
+  margin-bottom: 25px !important;
 `;
 
 const AuthCard: React.FC<AuthCardProps> = ({ children, title }) => {

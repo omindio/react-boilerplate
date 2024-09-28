@@ -15,18 +15,27 @@ export const logoutUser = () => {
   return apiClient.post('/auth/spa-logout', {});
 };
 
-export const checkAuthStatus = () => {
+export const checkAuthStatus = async () => {
+  await getCsrfToken();
   return apiClient.get('/auth/user');
 };
 
-export const renewSession = () => {
-  return apiClient.get('/auth/user');
+export const forgotPassword = async (email: string, captchaToken: string) => {
+  await getCsrfToken();
+  return apiClient.post('/auth/forgot-password', { email, captchaToken });
 };
 
-export const requestPasswordRecovery = (email: string) => {
-  return apiClient.post('/auth/recover-password', { email });
-};
-
-export const updatePassword = (token: string, newPassword: string) => {
-  return apiClient.post('/auth/update-password', { token, newPassword });
+export const resetPassword = async (
+  token: string,
+  password: string,
+  passwordConfirmation: string,
+  email: string
+) => {
+  await getCsrfToken();
+  return apiClient.post('/auth/reset-password', {
+    token,
+    password,
+    password_confirmation: passwordConfirmation,
+    email,
+  });
 };

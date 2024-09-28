@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Space } from 'antd';
 import Logo from '@shared/components/Logo';
+import FooterLayout from '@shared/components/FooterLayout';
 
 const SpaceStyled = styled(Space)`
   width: 100%;
@@ -18,6 +19,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ children }) => (
   <SpaceStyled direction="vertical" align="center">
     <Logo style={{ height: 80, marginBottom: '30px' }} />
     {children}
+    <FooterLayout />
   </SpaceStyled>
 );
 

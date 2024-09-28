@@ -11,7 +11,7 @@ const FooterStyled = styled(Footer)`
 const FooterLayout: React.FC = () => {
   return (
     <FooterStyled>
-      React app ©{new Date().getFullYear()} Created by omind.io
+      React app © {new Date().getFullYear()}. Created by omind.io
     </FooterStyled>
   );
 };

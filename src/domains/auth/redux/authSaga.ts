@@ -9,19 +9,19 @@ import {
   checkAuthStatusSuccess,
   checkAuthStatusFailure,
   checkAuthStatus,
-  passwordRecoveryRequest,
-  passwordRecoverySuccess,
-  passwordRecoveryFailure,
-  passwordUpdateRequest,
-  passwordUpdateSuccess,
-  passwordUpdateFailure,
+  forgotPasswordRequest,
+  forgotPasswordSuccess,
+  forgotPasswordFailure,
+  resetPasswordRequest,
+  resetPasswordSuccess,
+  resetPasswordFailure,
 } from './authSlice';
 import {
   loginUser,
   logoutUser,
   checkAuthStatus as checkAuthStatusApi,
-  requestPasswordRecovery,
-  updatePassword,
+  forgotPassword,
+  resetPassword,
 } from '../api/authApi';
 
 function* handleLogin(
@@ -58,15 +58,19 @@ function* handleCheckAuthStatus(): Generator<any, void> {
   }
 }
 
-function* handlePasswordRecovery(
-  action: ReturnType<typeof passwordRecoveryRequest>
+function* handleForgotPassword(
+  action: ReturnType<typeof forgotPasswordRequest>
 ): Generator<any, void> {
   try {
-    yield call(requestPasswordRecovery, action.payload.email);
-    yield put(passwordRecoverySuccess());
+    yield call(
+      forgotPassword,
+      action.payload.email,
+      action.payload.captchaToken
+    );
+    yield put(forgotPasswordSuccess());
   } catch (error: any) {
     yield put(
-      passwordRecoveryFailure(
+      forgotPasswordFailure(
         error.response?.data?.message || 'Password recovery failed'
       )
     );
@@ -74,18 +78,20 @@ function* handlePasswordRecovery(
 }
 
 function* handlePasswordUpdate(
-  action: ReturnType<typeof passwordUpdateRequest>
+  action: ReturnType<typeof resetPasswordRequest>
 ): Generator<any, void> {
   try {
     yield call(
-      updatePassword,
+      resetPassword,
       action.payload.token,
-      action.payload.newPassword
+      action.payload.password,
+      action.payload.passwordConfirmation,
+      action.payload.email
     );
-    yield put(passwordUpdateSuccess());
+    yield put(resetPasswordSuccess());
   } catch (error: any) {
     yield put(
-      passwordUpdateFailure(
+      resetPasswordFailure(
         error.response?.data?.message || 'Password update failed'
       )
     );
@@ -96,6 +102,6 @@ export default function* authSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(logoutRequest.type, handleLogout);
   yield takeLatest(checkAuthStatus.type, handleCheckAuthStatus);
-  yield takeLatest(passwordRecoveryRequest.type, handlePasswordRecovery);
-  yield takeLatest(passwordUpdateRequest.type, handlePasswordUpdate);
+  yield takeLatest(forgotPasswordRequest.type, handleForgotPassword);
+  yield takeLatest(resetPasswordRequest.type, handlePasswordUpdate);
 }
