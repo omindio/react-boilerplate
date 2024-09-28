@@ -8,11 +8,11 @@ export const loginUser = async (credentials: {
 }) => {
   await getCsrfToken();
 
-  return apiClient.post('/auth/spa-login', credentials);
+  return apiClient.post('/auth/spa/login', credentials);
 };
 
 export const logoutUser = () => {
-  return apiClient.post('/auth/spa-logout', {});
+  return apiClient.post('/auth/spa/logout', {});
 };
 
 export const checkAuthStatus = async () => {
