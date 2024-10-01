@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -8,15 +9,35 @@ const apiClient = axios.create({
   },
 });
 
-apiClient.interceptors.request.use((config) => {
-  const token = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('XSRF-TOKEN='))
-    ?.split('=')[1];
-  if (token) {
-    config.headers['X-XSRF-TOKEN'] = decodeURIComponent(token);
+let isFetchingCsrfToken = false;
+
+const getCsrfToken = async () => {
+  if (!isFetchingCsrfToken) {
+    isFetchingCsrfToken = true;
+    try {
+      await apiClient.get('/csrf-cookie');
+    } finally {
+      isFetchingCsrfToken = false;
+    }
   }
-  return config;
-});
+};
+
+apiClient.interceptors.request.use(
+  async (config) => {
+    let token = Cookies.get('XSRF-TOKEN');
+
+    if (!token) {
+      await getCsrfToken();
+      token = Cookies.get('XSRF-TOKEN');
+    }
+    if (token) {
+      config.headers['X-XSRF-TOKEN'] = decodeURIComponent(token);
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;

@@ -6,6 +6,7 @@ const { Footer } = Layout;
 
 const FooterStyled = styled(Footer)`
   text-align: center;
+  background: transparent;
 `;
 
 const FooterLayout: React.FC = () => {

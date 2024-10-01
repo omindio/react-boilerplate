@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
   }, [error]);
 
   useEffect(() => {
+    dispatch(clearStatus());
     return () => {
       dispatch(clearStatus());
     };
