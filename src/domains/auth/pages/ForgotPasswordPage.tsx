@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { Form, Input, Button, message, Divider, Alert } from 'antd';
+import { Form, Input, Button, message, Divider, Alert, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordRequest, clearStatus } from '../redux/authSlice';
@@ -114,6 +114,13 @@ const ForgotPasswordPage: React.FC = () => {
             >
               Recuperar Contraseña
             </Button>
+          </Form.Item>
+          <Form.Item>
+            <Typography.Text type="secondary">
+              Si no ves el email en tu buzón, consulta la carpeta de correo no
+              deseado. Si no está allí, es posible que la dirección de email no
+              esté confirmada o que no coincida con una cuenta existente.
+            </Typography.Text>
           </Form.Item>
           {success && (
             <Form.Item>

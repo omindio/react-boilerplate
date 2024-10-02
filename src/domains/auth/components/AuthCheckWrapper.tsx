@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AuthLoader from './AuthLoader';
 import useAuthCheck from '../hooks/useAuthCheck';
 
@@ -7,20 +7,10 @@ interface AuthCheckWrapperProps {
 }
 
 const AuthCheckWrapper: React.FC<AuthCheckWrapperProps> = ({ children }) => {
-  const { loading } = useAuthCheck();
-  const [initialLoad, setInitialLoad] = useState(true);
+  const { loading, initialAuthCheck } = useAuthCheck();
 
-  useEffect(() => {
-    if (!loading && initialLoad) {
-      const timer = setTimeout(() => {
-        setInitialLoad(false);
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-  }, [loading, initialLoad]);
-
-  if (loading || initialLoad) {
+  console.log(loading, initialAuthCheck);
+  if (loading && initialAuthCheck) {
     return <AuthLoader />;
   }
 

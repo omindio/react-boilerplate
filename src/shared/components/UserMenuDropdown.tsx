@@ -6,7 +6,10 @@ import { Dropdown, Avatar, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { logoutRequest } from '@domains/auth/redux/authSlice';
+import {
+  logoutRequest,
+  clearInitialAuthCheck,
+} from '@domains/auth/redux/authSlice';
 
 import { DownSquareOutlined } from '@ant-design/icons';
 
@@ -40,7 +43,10 @@ const UserMenuDropdown: React.FC = () => {
       label: 'Cerrar sesión',
       key: 'logout',
       extra: '⌘L',
-      onClick: () => dispatch(logoutRequest()),
+      onClick: () => {
+        dispatch(clearInitialAuthCheck());
+        dispatch(logoutRequest());
+      },
     },
   ];
 

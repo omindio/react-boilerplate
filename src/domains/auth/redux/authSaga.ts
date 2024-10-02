@@ -38,6 +38,7 @@ function* handleLogin(
 function* handleLogout() {
   try {
     yield call(logoutUser);
+    yield call([localStorage, 'clear']);
     yield put(logoutSuccess());
   } catch (error: any) {
     yield put(logoutFailure(error.response?.data?.message || 'Logout failed'));

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Layout } from 'antd';
 import UserMenuDropdown from './UserMenuDropdown';
 import HeaderMenu from './HeaderMenu';
-import Logo from '@shared/components/Logo';
 
+const Logo = React.lazy(() => import('@shared/components/Logo'));
 const { Header } = Layout;
 
 const HeaderStyled = styled(Header)`

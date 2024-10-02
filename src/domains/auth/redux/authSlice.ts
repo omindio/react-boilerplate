@@ -13,6 +13,7 @@ interface AuthState {
   loading: boolean;
   error: string | null;
   success: boolean;
+  initialAuthCheck: boolean;
 }
 
 const initialState: AuthState = {
@@ -21,6 +22,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   success: false,
+  initialAuthCheck: true,
 };
 
 const authSlice = createSlice({
@@ -69,6 +71,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.success = true;
+      state.initialAuthCheck = false;
     },
     checkAuthStatusFailure: (state, action: PayloadAction<string>) => {
       state.isAuthenticated = false;
@@ -76,6 +79,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
       state.success = false;
+      state.initialAuthCheck = false;
     },
     forgotPasswordRequest: (
       state,
@@ -114,6 +118,9 @@ const authSlice = createSlice({
       state.loading = false;
       state.success = false;
     },
+    clearInitialAuthCheck: (state) => {
+      state.initialAuthCheck = true;
+    },
     clearStatus: (state) => {
       state.error = null;
       state.success = false;
@@ -139,6 +146,7 @@ export const {
   resetPasswordSuccess,
   resetPasswordFailure,
   clearStatus,
+  clearInitialAuthCheck,
 } = authSlice.actions;
 
 export default authSlice.reducer;
