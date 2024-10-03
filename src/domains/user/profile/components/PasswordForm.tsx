@@ -1,11 +1,10 @@
 import React from 'react';
 import { LockOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@redux/store';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 import { Form, Input, Button, Typography, Space } from 'antd';
 
-const ChangePasswordForm: React.FC = () => {
-  const dispatch = useDispatch();
+const UpdatePasswordForm: React.FC = () => {
+  const dispatch = useAppDispatch();
 
   const onFinish = (values: {
     token: string;
@@ -100,4 +99,4 @@ const ChangePasswordForm: React.FC = () => {
   );
 };
 
-export default ChangePasswordForm;
+export default UpdatePasswordForm;

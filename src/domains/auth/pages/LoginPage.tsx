@@ -3,17 +3,16 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input, Button, message, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@redux/store';
-import { loginRequest, clearStatus } from '../redux/authSlice';
+import { useAppSelector, useAppDispatch } from '@redux/store';
+import { loginRequest, clearStatus } from '../redux/reducers/authSlice';
 
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 
 const LoginPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     document.title = 'Login';

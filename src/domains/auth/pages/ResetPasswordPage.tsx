@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { LockOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Divider, message, Alert } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { resetPasswordRequest, clearStatus } from '../redux/authSlice';
-import { RootState } from '@redux/store';
+import { resetPasswordRequest, clearStatus } from '../redux/reducers/authSlice';
+import { useAppSelector, useAppDispatch } from '@redux/store';
 
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 
 const ResetPasswordPage: React.FC = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { token } = useParams();
@@ -19,9 +18,7 @@ const ResetPasswordPage: React.FC = () => {
 
   const email = params.get('email');
 
-  const { loading, error, success } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { loading, error, success } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     document.title = 'Reset Password';

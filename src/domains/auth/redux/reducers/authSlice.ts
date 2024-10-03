@@ -62,7 +62,7 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.success = false;
     },
-    checkAuthStatus: (state) => {
+    checkAuthStatusRequest: (state) => {
       state.loading = true;
     },
     checkAuthStatusSuccess: (state, action: PayloadAction<User>) => {
@@ -136,7 +136,7 @@ export const {
   logoutRequest,
   logoutSuccess,
   logoutFailure,
-  checkAuthStatus,
+  checkAuthStatusRequest,
   checkAuthStatusFailure,
   checkAuthStatusSuccess,
   forgotPasswordRequest,

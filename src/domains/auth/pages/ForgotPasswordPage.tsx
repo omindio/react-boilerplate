@@ -3,23 +3,23 @@ import { UserOutlined } from '@ant-design/icons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { Form, Input, Button, message, Divider, Alert, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { forgotPasswordRequest, clearStatus } from '../redux/authSlice';
-import { RootState } from '@redux/store';
+import {
+  forgotPasswordRequest,
+  clearStatus,
+} from '../redux/reducers/authSlice';
+import { useAppSelector, useAppDispatch } from '@redux/store';
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 import CaptchaContainer from '@shared/components/CaptchaContainer';
 
 const ForgotPasswordPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const captchaRef = useRef<any>(null);
 
-  const { loading, error, success } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { loading, error, success } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     document.title = 'Forgot Password';

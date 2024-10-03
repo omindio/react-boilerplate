@@ -9,7 +9,6 @@ interface AuthCheckWrapperProps {
 const AuthCheckWrapper: React.FC<AuthCheckWrapperProps> = ({ children }) => {
   const { loading, initialAuthCheck } = useAuthCheck();
 
-  console.log(loading, initialAuthCheck);
   if (loading && initialAuthCheck) {
     return <AuthLoader />;
   }

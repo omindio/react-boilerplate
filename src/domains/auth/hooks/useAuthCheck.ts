@@ -1,26 +1,28 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { checkAuthStatus, clearInitialAuthCheck } from '../redux/authSlice';
-import { RootState } from '@redux/store';
+import {
+  checkAuthStatusRequest,
+  clearInitialAuthCheck,
+} from '../redux/reducers/authSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 
 const useAuthCheck = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { loading, isAuthenticated, initialAuthCheck } = useSelector(
-    (state: RootState) => state.auth
+  const dispatch = useAppDispatch();
+  const { loading, isAuthenticated, initialAuthCheck } = useAppSelector(
+    (state) => state.auth
   );
 
   useEffect(() => {
     const checkAuth = async () => {
       dispatch(clearInitialAuthCheck());
-      await dispatch(checkAuthStatus());
+      await dispatch(checkAuthStatusRequest());
     };
 
     checkAuth();
 
     const interval = setInterval(() => {
-      dispatch(checkAuthStatus());
+      dispatch(checkAuthStatusRequest());
     }, 1000000);
 
     return () => {

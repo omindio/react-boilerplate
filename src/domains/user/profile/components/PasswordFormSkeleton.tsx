@@ -1,7 +1,7 @@
 import React from 'react';
 import { Skeleton, Flex } from 'antd';
 
-const ChangePasswordFormSkeleton: React.FC = () => {
+const UpdatePasswordFormSkeleton: React.FC = () => {
   return (
     <Flex gap="middle" vertical>
       <Skeleton paragraph={{ rows: 2 }} active />
@@ -14,4 +14,4 @@ const ChangePasswordFormSkeleton: React.FC = () => {
   );
 };
 
-export default ChangePasswordFormSkeleton;
+export default UpdatePasswordFormSkeleton;

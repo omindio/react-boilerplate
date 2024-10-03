@@ -1,20 +1,17 @@
 import { configureStore, Reducer } from '@reduxjs/toolkit';
-import createSagaMiddleware, { Task } from 'redux-saga';
-import { useDispatch } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import { createRootReducer } from './rootReducer';
-import rootSaga from './rootSaga';
+import { createRootReducer } from './root/rootReducer';
+import rootSaga from './root/rootSaga';
 import persistConfig from './persistConfig';
 
-const asyncReducers: Record<string, Reducer> = {};
-const asyncSagas: Record<string, Task> = {};
+export const sagaMiddleware = createSagaMiddleware();
 
-const sagaMiddleware = createSagaMiddleware();
-
-const rootReducer = createRootReducer(asyncReducers);
+const rootReducer = createRootReducer();
 const persistedReducer = persistReducer(persistConfig, rootReducer as Reducer);
 
-const store = configureStore({
+export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
@@ -25,28 +22,7 @@ sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
 
-export const injectReducer = (key: string, reducer: Reducer) => {
-  if (!asyncReducers[key]) {
-    asyncReducers[key] = reducer;
-    store.replaceReducer(createRootReducer(asyncReducers));
-  }
-};
-
-export const injectSaga = (key: string, saga: any) => {
-  if (!asyncSagas[key]) {
-    asyncSagas[key] = sagaMiddleware.run(saga);
-  }
-};
-
-export const ejectSaga = (key: string) => {
-  if (asyncSagas[key]) {
-    asyncSagas[key].cancel();
-    delete asyncSagas[key];
-  }
-};
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-
-export default store;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

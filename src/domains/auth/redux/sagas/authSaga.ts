@@ -8,36 +8,34 @@ import {
   logoutFailure,
   checkAuthStatusSuccess,
   checkAuthStatusFailure,
-  checkAuthStatus,
+  checkAuthStatusRequest,
   forgotPasswordRequest,
   forgotPasswordSuccess,
   forgotPasswordFailure,
   resetPasswordRequest,
   resetPasswordSuccess,
   resetPasswordFailure,
-} from './authSlice';
+} from '../reducers/authSlice';
 import {
-  loginUser,
-  logoutUser,
+  login as loginApi,
+  logout as logoutApi,
   checkAuthStatus as checkAuthStatusApi,
-  forgotPassword,
-  resetPassword,
-} from '../api/authApi';
+  forgotPassword as forgotPasswordApi,
+  resetPassword as resetPasswordApi,
+} from '../../api/authApi';
 
-function* handleLogin(
-  action: ReturnType<typeof loginRequest>
-): Generator<any, void> {
+function* login(action: ReturnType<typeof loginRequest>): Generator<any, void> {
   try {
-    const response = yield call(loginUser, action.payload);
+    const response = yield call(loginApi, action.payload);
     yield put(loginSuccess(response.data.data.user));
   } catch (error: any) {
     yield put(loginFailure(error.response?.data?.message || 'Login failed'));
   }
 }
 
-function* handleLogout() {
+function* logout() {
   try {
-    yield call(logoutUser);
+    yield call(logoutApi);
     yield call([localStorage, 'clear']);
     yield put(logoutSuccess());
   } catch (error: any) {
@@ -45,7 +43,7 @@ function* handleLogout() {
   }
 }
 
-function* handleCheckAuthStatus(): Generator<any, void> {
+function* checkAuthStatus(): Generator<any, void> {
   try {
     const response = yield call(checkAuthStatusApi);
 
@@ -59,12 +57,12 @@ function* handleCheckAuthStatus(): Generator<any, void> {
   }
 }
 
-function* handleForgotPassword(
+function* forgotPassword(
   action: ReturnType<typeof forgotPasswordRequest>
 ): Generator<any, void> {
   try {
     yield call(
-      forgotPassword,
+      forgotPasswordApi,
       action.payload.email,
       action.payload.captchaToken
     );
@@ -78,12 +76,12 @@ function* handleForgotPassword(
   }
 }
 
-function* handlePasswordUpdate(
+function* resetPassword(
   action: ReturnType<typeof resetPasswordRequest>
 ): Generator<any, void> {
   try {
     yield call(
-      resetPassword,
+      resetPasswordApi,
       action.payload.token,
       action.payload.password,
       action.payload.passwordConfirmation,
@@ -100,9 +98,9 @@ function* handlePasswordUpdate(
 }
 
 export default function* authSaga() {
-  yield takeLatest(loginRequest.type, handleLogin);
-  yield takeLatest(logoutRequest.type, handleLogout);
-  yield takeLatest(checkAuthStatus.type, handleCheckAuthStatus);
-  yield takeLatest(forgotPasswordRequest.type, handleForgotPassword);
-  yield takeLatest(resetPasswordRequest.type, handlePasswordUpdate);
+  yield takeLatest(loginRequest.type, login);
+  yield takeLatest(logoutRequest.type, logout);
+  yield takeLatest(checkAuthStatusRequest.type, checkAuthStatus);
+  yield takeLatest(forgotPasswordRequest.type, forgotPassword);
+  yield takeLatest(resetPasswordRequest.type, resetPassword);
 }

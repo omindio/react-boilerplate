@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Menu } from 'antd';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@redux/store';
 import { Link, useLocation } from 'react-router-dom';
 import { DashboardOutlined } from '@ant-design/icons';
 
@@ -12,7 +12,7 @@ const MenuStyled = styled(Menu)`
 
 const HeaderMenu: React.FC = () => {
   const location = useLocation();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useAppSelector((state: any) => state.auth);
   const renderMenuItems = () => {
     switch (user.roles[0]) {
       case 'admin':

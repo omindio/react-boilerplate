@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Dropdown, Avatar, Space } from 'antd';
@@ -9,7 +8,8 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import {
   logoutRequest,
   clearInitialAuthCheck,
-} from '@domains/auth/redux/authSlice';
+} from '@domains/auth/redux/reducers/authSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 
 import { DownSquareOutlined } from '@ant-design/icons';
 
@@ -21,9 +21,9 @@ const AvatarStyled = styled(Avatar)`
 `;
 
 const UserMenuDropdown: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   const userMenuItems: MenuProps['items'] = [
     {

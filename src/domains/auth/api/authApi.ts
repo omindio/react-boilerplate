@@ -1,13 +1,13 @@
 import apiClient from '@shared/api/apiClient';
 
-export const loginUser = async (credentials: {
+export const login = async (credentials: {
   email: string;
   password: string;
 }) => {
   return apiClient.post('/auth/spa/login', credentials);
 };
 
-export const logoutUser = () => {
+export const logout = () => {
   return apiClient.post('/auth/spa/logout', {});
 };
 
@@ -28,7 +28,7 @@ export const resetPassword = async (
   return apiClient.post('/auth/reset-password', {
     token,
     password,
-    password_confirmation: passwordConfirmation,
+    passwordConfirmation,
     email,
   });
 };

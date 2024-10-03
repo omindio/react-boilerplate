@@ -2,14 +2,13 @@ import React, { useState, Suspense } from 'react';
 import AdminLayout from '@shared/layouts/AdminLayout';
 import { Tabs, Row, Col, Typography } from 'antd';
 import type { TabsProps } from 'antd';
-import ChangePasswordFormSkeleton from '../components/ChangePasswordFormSkeleton';
+import PasswordFormSkeleton from '../components/PasswordFormSkeleton';
+import PersonalDataFormSkeleton from '../components/PasswordFormSkeleton';
 
-const ChangePasswordForm = React.lazy(
-  () => import('../components/ChangePasswordForm')
-);
+const PasswordForm = React.lazy(() => import('../components/PasswordForm'));
 
-const UpdatePersonalDataForm = React.lazy(
-  () => import('../components/UpdatePersonalDataForm')
+const PersonalDataForm = React.lazy(
+  () => import('../components/PersonalDataForm')
 );
 
 const { Title } = Typography;
@@ -26,8 +25,8 @@ const ProfilePage: React.FC = () => {
       children: (
         <Row>
           <Col xs={24} sm={12} md={6} xl={4}>
-            <Suspense fallback={<ChangePasswordFormSkeleton />}>
-              <UpdatePersonalDataForm />
+            <Suspense fallback={<PersonalDataFormSkeleton />}>
+              <PersonalDataForm />
             </Suspense>
           </Col>
         </Row>
@@ -39,8 +38,8 @@ const ProfilePage: React.FC = () => {
       children: (
         <Row>
           <Col xs={24} sm={12} md={6} xl={4}>
-            <Suspense fallback={<ChangePasswordFormSkeleton />}>
-              <ChangePasswordForm />
+            <Suspense fallback={<PasswordFormSkeleton />}>
+              <PasswordForm />
             </Suspense>
           </Col>
         </Row>

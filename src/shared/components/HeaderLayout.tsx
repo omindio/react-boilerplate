@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import UserMenuDropdown from './UserMenuDropdown';
 import HeaderMenu from './HeaderMenu';
 
-const Logo = React.lazy(() => import('@shared/components/Logo'));
+import Logo from './Logo';
 const { Header } = Layout;
 
 const HeaderStyled = styled(Header)`
