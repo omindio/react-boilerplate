@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAppSelector } from '@redux/store';
+import { useAppSelector } from 'src/app/redux/store';
 import { message } from 'antd';
 
 interface UseStatusMessagesProps {

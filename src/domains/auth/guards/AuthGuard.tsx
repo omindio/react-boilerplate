@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { RootState } from '@redux/store';
+import { RootState } from 'src/app/redux/store';
 
 const AuthGuard: React.FC = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);

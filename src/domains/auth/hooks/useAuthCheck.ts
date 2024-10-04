@@ -4,7 +4,7 @@ import {
   checkAuthStatusRequest,
   clearInitialAuthCheck,
 } from '../redux/reducers/authSlice';
-import { useAppDispatch, useAppSelector } from '@redux/store';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/store';
 
 const useAuthCheck = () => {
   const navigate = useNavigate();

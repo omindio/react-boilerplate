@@ -15,7 +15,7 @@
     "paths": {
       "@shared/*": ["src/shared/*"],
       "@domains/*": ["src/domains/*"],
-      "@redux/*": ["src/redux/*"]
+      "@redux/*": ["src/app/redux/*"]
     },
     "noEmit": true,
     "allowImportingTsExtensions": true

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Menu } from 'antd';
-import { useAppSelector } from '@redux/store';
+import { useAppSelector } from 'src/app/redux/store';
 import { Link, useLocation } from 'react-router-dom';
 import { DashboardOutlined } from '@ant-design/icons';
 

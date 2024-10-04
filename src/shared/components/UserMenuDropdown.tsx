@@ -9,7 +9,7 @@ import {
   logoutRequest,
   clearInitialAuthCheck,
 } from '@domains/auth/redux/reducers/authSlice';
-import { useAppDispatch, useAppSelector } from '@redux/store';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/store';
 
 import { DownSquareOutlined } from '@ant-design/icons';
 

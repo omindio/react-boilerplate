@@ -1,6 +1,6 @@
 import React from 'react';
 import { LockOutlined } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '@redux/store';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/store';
 import { Form, Input, Button, Typography, Space } from 'antd';
 
 const UpdatePasswordForm: React.FC = () => {

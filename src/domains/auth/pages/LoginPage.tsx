@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppSelector, useAppDispatch } from '@redux/store';
+import { useAppSelector, useAppDispatch } from 'src/app/redux/store';
 import { loginRequest, clearStatus } from '../redux/reducers/authSlice';
 
 import AuthContainer from '../components/AuthContainer';

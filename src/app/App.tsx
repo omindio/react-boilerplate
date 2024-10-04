@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ConfigProvider, theme } from 'antd';
 import esES from 'antd/lib/locale/es_ES';
 
-import MainRoutes from './routes/MainRoutes';
+import MainRoutes from './AppRoutes';
 
 const App: React.FC = () => (
   <ConfigProvider

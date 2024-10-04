@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '@redux/store';
+import { useAppSelector, useAppDispatch } from 'src/app/redux/store';
 import { Form, Input, Button, Typography, Space } from 'antd';
 import {
   fetchPersonalDataRequest,
@@ -7,8 +7,8 @@ import {
 } from '../redux/reducers/personalDataSlice';
 import personalDataReducer from '../redux/reducers/personalDataSlice';
 import personalDataWatcherSaga from '../redux/sagas/personalDataSaga';
-import WithReducerAndSaga from '@redux/components/WithReducerAndSaga';
-import { WithFormInjectedProps } from '@redux/types/formInjectedProps';
+import WithReducerAndSaga from 'src/app/redux/components/WithReducerAndSaga';
+import { WithFormInjectedProps } from 'src/app/redux/types/formInjectedProps';
 import UpdatePersonalDataFormSkeleton from './PersonalDataFormSkeleton';
 import WithFormHandling from '@shared/components/WithFormHandling';
 import WithForm from '@shared/components/WithForm';

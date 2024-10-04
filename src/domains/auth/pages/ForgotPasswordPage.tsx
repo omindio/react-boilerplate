@@ -7,7 +7,7 @@ import {
   forgotPasswordRequest,
   clearStatus,
 } from '../redux/reducers/authSlice';
-import { useAppSelector, useAppDispatch } from '@redux/store';
+import { useAppSelector, useAppDispatch } from 'src/app/redux/store';
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 import CaptchaContainer from '@shared/components/CaptchaContainer';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormInstance } from 'antd';
-import { useAppDispatch, useAppSelector } from '@redux/store';
+import { useAppDispatch, useAppSelector } from 'src/app/redux/store';
 import useInitialFormValues from '@shared/hooks/useInitialFormValues';
 
 interface WithFormHandlingProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { RootState } from '@redux/store';
+import { RootState } from 'src/app/redux/store';
 
 interface PermissionGuardProps {
   allowedRoles?: string[];
