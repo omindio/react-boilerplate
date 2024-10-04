@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '@redux/store';
 import { Form, Input, Button, Typography, Space } from 'antd';
 import {
@@ -7,37 +7,22 @@ import {
 } from '../redux/reducers/personalDataSlice';
 import personalDataReducer from '../redux/reducers/personalDataSlice';
 import personalDataWatcherSaga from '../redux/sagas/personalDataSaga';
-import withReducerAndSaga from '@redux/components/WithReducerAndSaga';
-import { WithInjectedProps } from '@redux/types/injectedProps';
+import WithReducerAndSaga from '@redux/components/WithReducerAndSaga';
+import { WithFormInjectedProps } from '@redux/types/formInjectedProps';
+import UpdatePersonalDataFormSkeleton from './PersonalDataFormSkeleton';
+import WithFormHandling from '@shared/components/WithFormHandling';
+import WithForm from '@shared/components/WithForm';
+import useStatusMessages from '@shared/hooks/useStatusMessages';
 
-const UpdatePersonalDataForm: React.FC<WithInjectedProps> = ({
-  isInjected,
-}) => {
+const UpdatePersonalDataForm: React.FC<WithFormInjectedProps> = ({ form }) => {
   const dispatch = useAppDispatch();
 
-  const personalData = useAppSelector((state) => state.personalData);
+  const { loading } = useAppSelector((state) => state.personalData);
 
-  useEffect(() => {
-    if (isInjected) {
-      dispatch(fetchPersonalDataRequest());
-    }
-  }, [dispatch, isInjected]);
-
-  if (!isInjected) {
-    return <div>cargando...</div>;
-  }
-
-  /*
-  if (!personalData) {
-    return <div>Cargando datos...</div>;
-  }
-  */
-
-  const { name, loading } = personalData;
+  useStatusMessages({ selector: (state) => state.personalData });
 
   const onFinish = (values: { name: string }) => {
-    //dispatch(updatePersonalDataRequest(values));
-    //dispatch(fetchPersonalDataRequest());
+    dispatch(updatePersonalDataRequest(values));
   };
 
   return (
@@ -49,10 +34,11 @@ const UpdatePersonalDataForm: React.FC<WithInjectedProps> = ({
         name="personal_data_password_form"
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ name }}
+        form={form}
       >
         <Form.Item
           name="name"
+          label="Nombre"
           rules={[
             {
               required: true,
@@ -73,9 +59,19 @@ const UpdatePersonalDataForm: React.FC<WithInjectedProps> = ({
   );
 };
 
-export default withReducerAndSaga({
+const EnhancedUpdatePersonalDataForm = WithForm(
+  WithFormHandling(UpdatePersonalDataForm, {
+    fetchRequestAction: fetchPersonalDataRequest,
+    selector: (state) => state.personalData,
+    SkeletonComponent: UpdatePersonalDataFormSkeleton,
+  })
+);
+
+export default WithReducerAndSaga({
   key: 'personalData',
   reducer: personalDataReducer,
   saga: personalDataWatcherSaga,
   ejectKey: 'personalData',
-})(UpdatePersonalDataForm);
+})((props) => (
+  <EnhancedUpdatePersonalDataForm {...props} isInjected={props.isInjected} />
+));

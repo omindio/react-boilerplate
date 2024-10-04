@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Form, Input, Button, message, Divider } from 'antd';
+import { Form, Input, Button, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '@redux/store';
@@ -9,21 +9,23 @@ import { loginRequest, clearStatus } from '../redux/reducers/authSlice';
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 
+import useStatusMessages from '@shared/hooks/useStatusMessages';
+
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useAppSelector((state) => state.auth);
+  const { loading } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     document.title = 'Login';
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      message.error(error, 5);
+  useStatusMessages({
+    selector: (state) => state.auth,
+    onClearStatus() {
       dispatch(clearStatus());
-    }
-  }, [error]);
+    },
+  });
 
   useEffect(() => {
     dispatch(clearStatus());

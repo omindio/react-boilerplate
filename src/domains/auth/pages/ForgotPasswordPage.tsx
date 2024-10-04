@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { Form, Input, Button, message, Divider, Alert, Typography } from 'antd';
+import { Form, Input, Button, Divider, Alert, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
   forgotPasswordRequest,
@@ -11,6 +11,7 @@ import { useAppSelector, useAppDispatch } from '@redux/store';
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
 import CaptchaContainer from '@shared/components/CaptchaContainer';
+import useStatusMessages from '@shared/hooks/useStatusMessages';
 
 const ForgotPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +26,15 @@ const ForgotPasswordPage: React.FC = () => {
     document.title = 'Forgot Password';
   }, []);
 
+  useStatusMessages({
+    selector: (state) => state.auth,
+    onClearStatus() {
+      dispatch(clearStatus());
+    },
+  });
+
   useEffect(() => {
     if (error) {
-      message.error(error, 5);
-      dispatch(clearStatus());
-
       if (captchaRef.current) {
         captchaRef.current.resetCaptcha();
       }

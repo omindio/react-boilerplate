@@ -6,30 +6,24 @@ import {
   ejectSaga,
 } from '../injectors';
 
-const withReducerAndSaga =
-  ({
-    key,
-    reducer,
-    saga,
-    ejectKey,
-  }: {
-    key: string;
-    reducer: any;
-    saga: any;
-    ejectKey?: string;
-  }) =>
+interface WithReducerAndSagaProps {
+  key: string;
+  reducer: any;
+  saga: () => any;
+  ejectKey?: string;
+}
+
+const WithReducerAndSaga =
+  ({ key, reducer, saga, ejectKey }: WithReducerAndSagaProps) =>
   (WrappedComponent: React.ComponentType<any>) => {
     const EnhancedComponent = (props: any) => {
       const [isInjected, setIsInjected] = useState(false);
 
       useEffect(() => {
         injectReducer(key, reducer);
-        const sagaTask = injectSaga(key, saga);
+        injectSaga(key, saga);
 
-        sagaTask?.toPromise().then(() => {
-          setIsInjected(true);
-        });
-
+        setIsInjected(true);
         return () => {
           if (ejectKey) {
             ejectReducer(ejectKey);
@@ -44,4 +38,4 @@ const withReducerAndSaga =
     return EnhancedComponent;
   };
 
-export default withReducerAndSaga;
+export default WithReducerAndSaga;

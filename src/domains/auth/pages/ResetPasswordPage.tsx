@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { LockOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Divider, message, Alert } from 'antd';
+import { Form, Input, Button, Divider, Alert } from 'antd';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { resetPasswordRequest, clearStatus } from '../redux/reducers/authSlice';
 import { useAppSelector, useAppDispatch } from '@redux/store';
 
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
+
+import useStatusMessages from '@shared/hooks/useStatusMessages';
 
 const ResetPasswordPage: React.FC = () => {
   const location = useLocation();
@@ -24,12 +26,12 @@ const ResetPasswordPage: React.FC = () => {
     document.title = 'Reset Password';
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      message.error(error, 5);
+  useStatusMessages({
+    selector: (state) => state.auth,
+    onClearStatus() {
       dispatch(clearStatus());
-    }
-  }, [error]);
+    },
+  });
 
   useEffect(() => {
     dispatch(clearStatus());

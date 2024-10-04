@@ -4,12 +4,14 @@ interface PersonalDataState {
   name: string;
   loading: boolean;
   error: string | null;
+  success: string | null;
 }
 
 const initialState: PersonalDataState = {
   name: '',
   loading: false,
   error: null,
+  success: null,
 };
 
 const personalDataSlice = createSlice({
@@ -18,6 +20,7 @@ const personalDataSlice = createSlice({
   reducers: {
     fetchPersonalDataRequest(state) {
       state.loading = true;
+      state.success = null;
     },
     fetchPersonalDataSuccess(state, action: PayloadAction<{ name: string }>) {
       state.loading = false;
@@ -29,14 +32,20 @@ const personalDataSlice = createSlice({
     },
     updatePersonalDataRequest(state, action: PayloadAction<{ name: string }>) {
       state.loading = true;
+      state.success = null;
     },
-    updatePersonalDataSuccess(state, action: PayloadAction<{ name: string }>) {
+    updatePersonalDataSuccess(
+      state,
+      action: PayloadAction<{ message: string; data: { name: string } }>
+    ) {
       state.loading = false;
-      state.name = action.payload.name;
+      state.name = action.payload.data.name;
+      state.success = action.payload.message;
     },
     updatePersonalDataFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
+      state.success = null;
     },
   },
 });
