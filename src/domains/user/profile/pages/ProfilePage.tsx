@@ -2,8 +2,8 @@ import React, { useState, Suspense } from 'react';
 import AdminLayout from '@shared/layouts/AdminLayout';
 import { Tabs, Row, Col, Typography } from 'antd';
 import type { TabsProps } from 'antd';
-import PasswordFormSkeleton from '../components/PasswordFormSkeleton';
-import PersonalDataFormSkeleton from '../components/PasswordFormSkeleton';
+import PasswordFormSkeleton from '../components/skeleton/PasswordFormSkeleton';
+import PersonalDataFormSkeleton from '../components/skeleton/PasswordFormSkeleton';
 
 const PasswordForm = React.lazy(() => import('../components/PasswordForm'));
 

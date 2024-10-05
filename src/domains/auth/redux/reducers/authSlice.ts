@@ -12,7 +12,7 @@ interface AuthState {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
-  success: boolean;
+  success: string | null;
   initialAuthCheck: boolean;
 }
 
@@ -21,7 +21,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
   loading: false,
   error: null,
-  success: false,
+  success: null,
   initialAuthCheck: true,
 };
 
@@ -39,28 +39,27 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
       state.loading = false;
-      state.success = true;
       state.error = null;
     },
-    loginFailure: (state, action: PayloadAction<string>) => {
+    loginFailure: (state, action: PayloadAction<{ message: string }>) => {
       state.loading = false;
-      state.error = action.payload;
-      state.success = false;
+      state.error = action.payload.message;
+      state.success = null;
     },
     logoutRequest: (state) => {
       state.loading = true;
     },
-    logoutSuccess: (state) => {
+    logoutSuccess: (state, action: PayloadAction<{ message: string }>) => {
       state.loading = false;
       state.user = null;
       state.isAuthenticated = false;
       state.error = null;
-      state.success = true;
+      state.success = action.payload.message;
     },
-    logoutFailure: (state, action: PayloadAction<string>) => {
+    logoutFailure: (state, action: PayloadAction<{ message: string }>) => {
       state.loading = false;
-      state.error = action.payload;
-      state.success = false;
+      state.error = action.payload.message;
+      state.success = null;
     },
     checkAuthStatusRequest: (state) => {
       state.loading = true;
@@ -70,60 +69,24 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
       state.error = null;
-      state.success = true;
       state.initialAuthCheck = false;
     },
-    checkAuthStatusFailure: (state, action: PayloadAction<string>) => {
+    checkAuthStatusFailure: (
+      state,
+      action: PayloadAction<{ message: string }>
+    ) => {
       state.isAuthenticated = false;
       state.user = null;
       state.loading = false;
-      state.error = action.payload;
-      state.success = false;
+      state.error = action.payload.message;
       state.initialAuthCheck = false;
-    },
-    forgotPasswordRequest: (
-      state,
-      action: PayloadAction<{ email: string; captchaToken: string }>
-    ) => {
-      state.loading = true;
-    },
-    forgotPasswordSuccess: (state) => {
-      state.loading = false;
-      state.success = true;
-      state.error = null;
-    },
-    forgotPasswordFailure: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.loading = false;
-      state.success = false;
-    },
-    resetPasswordRequest: (
-      state,
-      action: PayloadAction<{
-        token: string;
-        password: string;
-        passwordConfirmation: string;
-        email: string;
-      }>
-    ) => {
-      state.loading = true;
-    },
-    resetPasswordSuccess: (state) => {
-      state.loading = false;
-      state.success = true;
-      state.error = null;
-    },
-    resetPasswordFailure: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.loading = false;
-      state.success = false;
     },
     clearInitialAuthCheck: (state) => {
       state.initialAuthCheck = true;
     },
     clearStatus: (state) => {
       state.error = null;
-      state.success = false;
+      state.success = null;
       state.loading = false;
     },
   },
@@ -139,12 +102,6 @@ export const {
   checkAuthStatusRequest,
   checkAuthStatusFailure,
   checkAuthStatusSuccess,
-  forgotPasswordRequest,
-  forgotPasswordSuccess,
-  forgotPasswordFailure,
-  resetPasswordRequest,
-  resetPasswordSuccess,
-  resetPasswordFailure,
   clearStatus,
   clearInitialAuthCheck,
 } = authSlice.actions;

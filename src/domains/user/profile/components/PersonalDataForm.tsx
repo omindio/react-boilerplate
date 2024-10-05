@@ -7,11 +7,11 @@ import {
 } from '../redux/reducers/personalDataSlice';
 import personalDataReducer from '../redux/reducers/personalDataSlice';
 import personalDataWatcherSaga from '../redux/sagas/personalDataSaga';
-import WithReducerAndSaga from 'src/app/redux/components/WithReducerAndSaga';
+import WithReducerAndSaga from '@shared/hocs/WithReducerAndSaga';
 import { WithFormInjectedProps } from 'src/app/redux/types/formInjectedProps';
-import UpdatePersonalDataFormSkeleton from './PersonalDataFormSkeleton';
-import WithFormHandling from '@shared/components/WithFormHandling';
-import WithForm from '@shared/components/WithForm';
+import UpdatePersonalDataFormSkeleton from './skeleton/PersonalDataFormSkeleton';
+import WithFormHandling from '@shared/hocs/WithFormHandling';
+import WithForm from '@shared/hocs/WithForm';
 import useStatusMessages from '@shared/hooks/useStatusMessages';
 
 const UpdatePersonalDataForm: React.FC<WithFormInjectedProps> = ({ form }) => {

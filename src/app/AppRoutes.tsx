@@ -17,9 +17,9 @@ const MainRoutes: React.FC = () => {
     ...AuthRoutes,
     {
       element: (
-        <AuthCheckWrapper>
-          <AuthGuard />
-        </AuthCheckWrapper>
+        <AuthGuard>
+          <AuthCheckWrapper />
+        </AuthGuard>
       ),
       children: [...DashboardRoutes, ...ProfileRoutes],
     },

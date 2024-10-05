@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider, theme, App as AntdApp } from 'antd';
+import { AntdProvider } from '@shared/contexts/AntdContext';
 import esES from 'antd/lib/locale/es_ES';
 
-import MainRoutes from './AppRoutes';
+import AppRoutes from './AppRoutes';
 
 const App: React.FC = () => (
   <ConfigProvider
@@ -16,9 +17,13 @@ const App: React.FC = () => (
       },
     }}
   >
-    <Router>
-      <MainRoutes />
-    </Router>
+    <AntdApp>
+      <AntdProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </AntdProvider>
+    </AntdApp>
   </ConfigProvider>
 );
 

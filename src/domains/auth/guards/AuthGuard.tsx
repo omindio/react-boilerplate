@@ -4,7 +4,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { RootState } from 'src/app/redux/store';
 
-const AuthGuard: React.FC = () => {
+interface AuthCheckWrapperProps {
+  children: React.ReactNode;
+}
+
+const AuthGuard: React.FC<AuthCheckWrapperProps> = ({ children }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const location = useLocation();
 
@@ -12,7 +16,7 @@ const AuthGuard: React.FC = () => {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 };
 
 export default AuthGuard;

@@ -1,4 +1,4 @@
-import { call, put, takeLatest, delay } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   loginRequest,
   loginSuccess,
@@ -9,19 +9,11 @@ import {
   checkAuthStatusSuccess,
   checkAuthStatusFailure,
   checkAuthStatusRequest,
-  forgotPasswordRequest,
-  forgotPasswordSuccess,
-  forgotPasswordFailure,
-  resetPasswordRequest,
-  resetPasswordSuccess,
-  resetPasswordFailure,
 } from '../reducers/authSlice';
 import {
   login as loginApi,
   logout as logoutApi,
   checkAuthStatus as checkAuthStatusApi,
-  forgotPassword as forgotPasswordApi,
-  resetPassword as resetPasswordApi,
 } from '../../api/authApi';
 
 function* login(action: ReturnType<typeof loginRequest>): Generator<any, void> {
@@ -29,17 +21,17 @@ function* login(action: ReturnType<typeof loginRequest>): Generator<any, void> {
     const response = yield call(loginApi, action.payload);
     yield put(loginSuccess(response.data.data.user));
   } catch (error: any) {
-    yield put(loginFailure(error.response?.data?.message || 'Login failed'));
+    yield put(loginFailure(error.response?.data));
   }
 }
 
-function* logout() {
+function* logout(): Generator<any, void> {
   try {
-    yield call(logoutApi);
+    const response = yield call(logoutApi);
     yield call([localStorage, 'clear']);
-    yield put(logoutSuccess());
+    yield put(logoutSuccess(response.data));
   } catch (error: any) {
-    yield put(logoutFailure(error.response?.data?.message || 'Logout failed'));
+    yield put(logoutFailure(error.response?.data));
   }
 }
 
@@ -49,51 +41,7 @@ function* checkAuthStatus(): Generator<any, void> {
 
     yield put(checkAuthStatusSuccess(response.data.data.user));
   } catch (error: any) {
-    yield put(
-      checkAuthStatusFailure(
-        error.response?.data?.message || 'Failed to check auth status'
-      )
-    );
-  }
-}
-
-function* forgotPassword(
-  action: ReturnType<typeof forgotPasswordRequest>
-): Generator<any, void> {
-  try {
-    yield call(
-      forgotPasswordApi,
-      action.payload.email,
-      action.payload.captchaToken
-    );
-    yield put(forgotPasswordSuccess());
-  } catch (error: any) {
-    yield put(
-      forgotPasswordFailure(
-        error.response?.data?.message || 'Password recovery failed'
-      )
-    );
-  }
-}
-
-function* resetPassword(
-  action: ReturnType<typeof resetPasswordRequest>
-): Generator<any, void> {
-  try {
-    yield call(
-      resetPasswordApi,
-      action.payload.token,
-      action.payload.password,
-      action.payload.passwordConfirmation,
-      action.payload.email
-    );
-    yield put(resetPasswordSuccess());
-  } catch (error: any) {
-    yield put(
-      resetPasswordFailure(
-        error.response?.data?.message || 'Password update failed'
-      )
-    );
+    yield put(checkAuthStatusFailure(error.response?.data));
   }
 }
 
@@ -101,6 +49,4 @@ export default function* authSaga() {
   yield takeLatest(loginRequest.type, login);
   yield takeLatest(logoutRequest.type, logout);
   yield takeLatest(checkAuthStatusRequest.type, checkAuthStatus);
-  yield takeLatest(forgotPasswordRequest.type, forgotPassword);
-  yield takeLatest(resetPasswordRequest.type, resetPassword);
 }

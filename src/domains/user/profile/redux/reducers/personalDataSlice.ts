@@ -26,9 +26,12 @@ const personalDataSlice = createSlice({
       state.loading = false;
       state.name = action.payload.name;
     },
-    fetchPersonalDataFailure(state, action: PayloadAction<string>) {
+    fetchPersonalDataFailure(
+      state,
+      action: PayloadAction<{ message: string }>
+    ) {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     updatePersonalDataRequest(state, action: PayloadAction<{ name: string }>) {
       state.loading = true;
@@ -42,9 +45,12 @@ const personalDataSlice = createSlice({
       state.name = action.payload.data.name;
       state.success = action.payload.message;
     },
-    updatePersonalDataFailure(state, action: PayloadAction<string>) {
+    updatePersonalDataFailure(
+      state,
+      action: PayloadAction<{ message: string }>
+    ) {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
       state.success = null;
     },
   },

@@ -4,7 +4,7 @@ import {
   ejectReducer,
   injectSaga,
   ejectSaga,
-} from '../injectors';
+} from '../../app/redux/injectors';
 
 interface WithReducerAndSagaProps {
   key: string;
@@ -22,7 +22,6 @@ const WithReducerAndSaga =
       useEffect(() => {
         injectReducer(key, reducer);
         injectSaga(key, saga);
-
         setIsInjected(true);
         return () => {
           if (ejectKey) {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppSelector } from 'src/app/redux/store';
-import { message } from 'antd';
+import { useAntd } from '@shared/contexts/AntdContext';
 
 interface UseStatusMessagesProps {
   selector: (state: any) => any;
@@ -14,6 +14,7 @@ const useStatusMessages = ({
   onClearStatus,
 }: UseStatusMessagesProps) => {
   const { success, error } = useAppSelector(selector);
+  const { message } = useAntd();
 
   useEffect(() => {
     if (success) {

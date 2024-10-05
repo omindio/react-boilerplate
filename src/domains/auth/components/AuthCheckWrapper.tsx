@@ -1,19 +1,16 @@
 import React from 'react';
 import AuthLoader from './AuthLoader';
 import useAuthCheck from '../hooks/useAuthCheck';
+import { Outlet } from 'react-router-dom';
 
-interface AuthCheckWrapperProps {
-  children: React.ReactNode;
-}
-
-const AuthCheckWrapper: React.FC<AuthCheckWrapperProps> = ({ children }) => {
+const AuthCheckWrapper: React.FC = () => {
   const { loading, initialAuthCheck } = useAuthCheck();
 
   if (loading && initialAuthCheck) {
     return <AuthLoader />;
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default AuthCheckWrapper;
