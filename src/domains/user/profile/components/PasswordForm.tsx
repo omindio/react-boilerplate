@@ -8,8 +8,8 @@ const UpdatePasswordForm: React.FC = () => {
 
   const onFinish = (values: {
     token: string;
-    password: string;
-    passwordConfirmation: string;
+    newPassword: string;
+    confirmPassword: string;
     email: string;
   }) => {
     // dispatch(resetPasswordRequest(values));
@@ -41,7 +41,7 @@ const UpdatePasswordForm: React.FC = () => {
           />
         </Form.Item>
         <Form.Item
-          name="password"
+          name="newPassword"
           rules={[
             {
               required: true,
@@ -60,7 +60,7 @@ const UpdatePasswordForm: React.FC = () => {
           />
         </Form.Item>
         <Form.Item
-          name="passwordConfirmation"
+          name="confirmPassword"
           dependencies={['password']}
           hasFeedback
           rules={[

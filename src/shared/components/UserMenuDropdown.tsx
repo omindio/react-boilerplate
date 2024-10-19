@@ -27,8 +27,8 @@ const UserMenuDropdown: React.FC = () => {
 
   const userMenuItems: MenuProps['items'] = [
     {
-      key: 'userName',
-      label: user.name,
+      key: 'userEmail',
+      label: user.email,
       disabled: true,
     },
     {

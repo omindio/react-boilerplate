@@ -42,8 +42,8 @@ const forgotPasswordSlice = createSlice({
       state,
       action: PayloadAction<{
         token: string;
-        password: string;
-        passwordConfirmation: string;
+        newPassword: string;
+        confirmPassword: string;
         email: string;
       }>
     ) => {

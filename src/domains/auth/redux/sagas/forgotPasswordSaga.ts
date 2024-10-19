@@ -34,8 +34,8 @@ function* resetPassword(
     const response = yield call(
       resetPasswordApi,
       action.payload.token,
-      action.payload.password,
-      action.payload.passwordConfirmation,
+      action.payload.newPassword,
+      action.payload.confirmPassword,
       action.payload.email
     );
     yield put(resetPasswordSuccess(response.data));

@@ -21,7 +21,7 @@ const UpdatePersonalDataForm: React.FC<WithFormInjectedProps> = ({ form }) => {
 
   useStatusMessages({ selector: (state) => state.personalData });
 
-  const onFinish = (values: { name: string }) => {
+  const onFinish = (values: { name: string; surname: string }) => {
     dispatch(updatePersonalDataRequest(values));
   };
 
@@ -48,6 +48,19 @@ const UpdatePersonalDataForm: React.FC<WithFormInjectedProps> = ({ form }) => {
           ]}
         >
           <Input placeholder="Introduce tu nombre" />
+        </Form.Item>
+        <Form.Item
+          name="surname"
+          label="Apellido"
+          rules={[
+            {
+              required: true,
+              message: 'Por favor escribe tu apellido',
+              min: 3,
+            },
+          ]}
+        >
+          <Input placeholder="Introduce tu apellido" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading} block>

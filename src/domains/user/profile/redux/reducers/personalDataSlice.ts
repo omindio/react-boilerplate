@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PersonalDataState {
   name: string;
+  surname: string;
   loading: boolean;
   error: string | null;
   success: string | null;
@@ -9,6 +10,7 @@ interface PersonalDataState {
 
 const initialState: PersonalDataState = {
   name: '',
+  surname: '',
   loading: false,
   error: null,
   success: null,
@@ -22,9 +24,13 @@ const personalDataSlice = createSlice({
       state.loading = true;
       state.success = null;
     },
-    fetchPersonalDataSuccess(state, action: PayloadAction<{ name: string }>) {
+    fetchPersonalDataSuccess(
+      state,
+      action: PayloadAction<{ name: string; surname: string }>
+    ) {
       state.loading = false;
       state.name = action.payload.name;
+      state.surname = action.payload.surname;
     },
     fetchPersonalDataFailure(
       state,
@@ -33,16 +39,23 @@ const personalDataSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
-    updatePersonalDataRequest(state, action: PayloadAction<{ name: string }>) {
+    updatePersonalDataRequest(
+      state,
+      action: PayloadAction<{ name: string; surname: string }>
+    ) {
       state.loading = true;
       state.success = null;
     },
     updatePersonalDataSuccess(
       state,
-      action: PayloadAction<{ message: string; data: { name: string } }>
+      action: PayloadAction<{
+        message: string;
+        data: { name: string; surname: string };
+      }>
     ) {
       state.loading = false;
       state.name = action.payload.data.name;
+      state.surname = action.payload.data.surname;
       state.success = action.payload.message;
     },
     updatePersonalDataFailure(

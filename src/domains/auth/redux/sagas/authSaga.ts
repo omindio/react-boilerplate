@@ -19,7 +19,7 @@ import {
 function* login(action: ReturnType<typeof loginRequest>): Generator<any, void> {
   try {
     const response = yield call(loginApi, action.payload);
-    yield put(loginSuccess(response.data.data.user));
+    yield put(loginSuccess(response.data.data));
   } catch (error: any) {
     yield put(loginFailure(error.response?.data));
   }
@@ -39,7 +39,7 @@ function* checkAuthStatus(): Generator<any, void> {
   try {
     const response = yield call(checkAuthStatusApi);
 
-    yield put(checkAuthStatusSuccess(response.data.data.user));
+    yield put(checkAuthStatusSuccess(response.data.data));
   } catch (error: any) {
     yield put(checkAuthStatusFailure(error.response?.data));
   }
