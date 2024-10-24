@@ -1,29 +1,29 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
-  forgotPasswordRequest,
-  forgotPasswordSuccess,
-  forgotPasswordFailure,
+  passwordResetRequest,
+  passwordResetSuccess,
+  passwordResetFailure,
   resetPasswordRequest,
   resetPasswordSuccess,
   resetPasswordFailure,
-} from '../reducers/forgotPasswordSlice';
+} from '../reducers/PasswordResetSlice';
 import {
-  forgotPassword as forgotPasswordApi,
+  passwordReset as passwordResetApi,
   resetPassword as resetPasswordApi,
-} from '../../api/forgotPasswordApi';
+} from '../../api/passwordResetApi';
 
-function* forgotPassword(
-  action: ReturnType<typeof forgotPasswordRequest>
+function* passwordReset(
+  action: ReturnType<typeof passwordResetRequest>
 ): Generator<any, void> {
   try {
     const response = yield call(
-      forgotPasswordApi,
+      passwordResetApi,
       action.payload.email,
       action.payload.captchaToken
     );
-    yield put(forgotPasswordSuccess(response.data));
+    yield put(passwordResetSuccess(response.data));
   } catch (error: any) {
-    yield put(forgotPasswordFailure(error.response?.data));
+    yield put(passwordResetFailure(error.response?.data));
   }
 }
 
@@ -45,6 +45,6 @@ function* resetPassword(
 }
 
 export default function* authSaga() {
-  yield takeLatest(forgotPasswordRequest.type, forgotPassword);
+  yield takeLatest(passwordResetRequest.type, passwordReset);
   yield takeLatest(resetPasswordRequest.type, resetPassword);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Skeleton, Flex } from 'antd';
 
-const ForgotPasswordFormSkeleton: React.FC = () => {
+const PasswordResetFormSkeleton: React.FC = () => {
   return (
     <Flex gap="middle" vertical>
       <Skeleton.Input block={true} active />
@@ -13,4 +13,4 @@ const ForgotPasswordFormSkeleton: React.FC = () => {
   );
 };
 
-export default ForgotPasswordFormSkeleton;
+export default PasswordResetFormSkeleton;

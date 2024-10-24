@@ -3,22 +3,22 @@ import { UserOutlined } from '@ant-design/icons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { Form, Input, Button, Divider, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import forgotPasswordReducer from '../redux/reducers/forgotPasswordSlice';
-import forgotPasswordSaga from '../redux/sagas/forgotPasswordSaga';
+import passwordResetReducer from '../redux/reducers/PasswordResetSlice';
+import passwordResetSaga from '../redux/sagas/PasswordResetSaga';
 import { useAppSelector, useAppDispatch } from 'src/app/redux/store';
 import {
-  forgotPasswordRequest,
+  passwordResetRequest,
   clearStatus,
-} from '../redux/reducers/forgotPasswordSlice';
+} from '../redux/reducers/PasswordResetSlice';
 
 import CaptchaContainer from '@shared/components/CaptchaContainer';
 import useStatusMessages from '@shared/hooks/useStatusMessages';
 
 import WithReducerAndSaga from '@shared/hocs/WithReducerAndSaga';
 import WithInjectionCheck from '@shared/hocs/WithInjectionCheck';
-import ForgotPasswordFormSkeleton from './skeleton/ForgotPasswordFormSkeleton';
+import PasswordResetFormSkeleton from './skeleton/PasswordResetFormSkeleton';
 
-const ForgotPasswordForm: React.FC = () => {
+const PasswordResetForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -26,11 +26,11 @@ const ForgotPasswordForm: React.FC = () => {
   const captchaRef = useRef<any>(null);
 
   const { loading, error, success } = useAppSelector(
-    (state) => state.forgotPassword
+    (state) => state.passwordReset
   );
 
   useStatusMessages({
-    selector: (state) => state.forgotPassword,
+    selector: (state) => state.passwordReset,
     onClearStatus() {
       dispatch(clearStatus());
     },
@@ -48,7 +48,7 @@ const ForgotPasswordForm: React.FC = () => {
   }, [error, success]);
 
   const onFinish = (values: { email: string; captchaToken: string }) => {
-    dispatch(forgotPasswordRequest(values));
+    dispatch(passwordResetRequest(values));
   };
 
   const handleCaptchaVerification = (token: string) => {
@@ -120,15 +120,15 @@ const ForgotPasswordForm: React.FC = () => {
   );
 };
 
-const EnhancedForgotPasswordForm = WithInjectionCheck(ForgotPasswordForm, {
-  SkeletonComponent: () => <ForgotPasswordFormSkeleton />,
+const EnhancedPasswordResetForm = WithInjectionCheck(PasswordResetForm, {
+  SkeletonComponent: () => <PasswordResetFormSkeleton />,
 });
 
 export default WithReducerAndSaga({
-  key: 'forgotPassword',
-  reducer: forgotPasswordReducer,
-  saga: forgotPasswordSaga,
-  ejectKey: 'forgotPassword',
+  key: 'passwordReset',
+  reducer: passwordResetReducer,
+  saga: passwordResetSaga,
+  ejectKey: 'passwordReset',
 })((props) => (
-  <EnhancedForgotPasswordForm {...props} isInjected={props.isInjected} />
+  <EnhancedPasswordResetForm {...props} isInjected={props.isInjected} />
 ));

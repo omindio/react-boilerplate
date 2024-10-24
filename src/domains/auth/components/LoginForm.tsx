@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
       </Form.Item>
       <Divider>o</Divider>
       <Form.Item>
-        <Button block onClick={() => navigate('/forgot-password')}>
+        <Button block onClick={() => navigate('/password/request')}>
           Recuperar la contraseña
         </Button>
       </Form.Item>

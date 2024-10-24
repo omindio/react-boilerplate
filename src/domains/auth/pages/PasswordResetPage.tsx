@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import AuthContainer from '../components/AuthContainer';
 import AuthCard from '../components/AuthCard';
-import ForgotPasswordForm from '../components/ForgotPasswordForm';
+import ForgotPasswordForm from '../components/PasswordResetForm';
 
-const ForgotPasswordPage: React.FC = () => {
+const PasswordResetPage: React.FC = () => {
   useEffect(() => {
     document.title = 'Forgot Password';
   }, []);
@@ -17,4 +17,4 @@ const ForgotPasswordPage: React.FC = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default PasswordResetPage;

@@ -1,28 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ForgotPasswordState {
+interface PasswordResetState {
   loading: boolean;
   error: string | null;
   success: string | null;
 }
 
-const initialState: ForgotPasswordState = {
+const initialState: PasswordResetState = {
   loading: false,
   error: null,
   success: null,
 };
 
-const forgotPasswordSlice = createSlice({
-  name: 'forgotPassword',
+const passwordResetSlice = createSlice({
+  name: 'passwordReset',
   initialState,
   reducers: {
-    forgotPasswordRequest: (
+    passwordResetRequest: (
       state,
       action: PayloadAction<{ email: string; captchaToken: string }>
     ) => {
       state.loading = true;
     },
-    forgotPasswordSuccess: (
+    passwordResetSuccess: (
       state,
       action: PayloadAction<{ message: string }>
     ) => {
@@ -30,7 +30,7 @@ const forgotPasswordSlice = createSlice({
       state.success = action.payload.message;
       state.error = null;
     },
-    forgotPasswordFailure: (
+    passwordResetFailure: (
       state,
       action: PayloadAction<{ message: string }>
     ) => {
@@ -74,13 +74,13 @@ const forgotPasswordSlice = createSlice({
 });
 
 export const {
-  forgotPasswordRequest,
-  forgotPasswordSuccess,
-  forgotPasswordFailure,
+  passwordResetRequest,
+  passwordResetSuccess,
+  passwordResetFailure,
   resetPasswordRequest,
   resetPasswordSuccess,
   resetPasswordFailure,
   clearStatus,
-} = forgotPasswordSlice.actions;
+} = passwordResetSlice.actions;
 
-export default forgotPasswordSlice.reducer;
+export default passwordResetSlice.reducer;

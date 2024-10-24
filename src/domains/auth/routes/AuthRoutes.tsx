@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { RouteObject } from 'react-router-dom';
 
 const LoginPage = lazy(() => import('../pages/LoginPage'));
-const ForgotPasswordPage = lazy(() => import('../pages/ForgotPasswordPage'));
+const PasswordResetPage = lazy(() => import('../pages/PasswordResetPage'));
 const ResetPasswordPage = lazy(() => import('../pages/ResetPasswordPage'));
 
 import GuestGuard from '../guards/GuestGuard';
@@ -20,15 +20,15 @@ const AuthRoutes: RouteObject[] = [
         ),
       },
       {
-        path: 'forgot-password',
+        path: 'password/request',
         element: (
           <Suspense>
-            <ForgotPasswordPage />
+            <PasswordResetPage />
           </Suspense>
         ),
       },
       {
-        path: 'reset-password/:token',
+        path: 'password/reset/:token',
         element: (
           <Suspense>
             <ResetPasswordPage />

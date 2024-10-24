@@ -5,11 +5,11 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import {
   resetPasswordRequest,
   clearStatus,
-} from '../redux/reducers/forgotPasswordSlice';
+} from '../redux/reducers/PasswordResetSlice';
 import { useAppSelector, useAppDispatch } from 'src/app/redux/store';
 
-import forgotPasswordReducer from '../redux/reducers/forgotPasswordSlice';
-import forgotPasswordSaga from '../redux/sagas/forgotPasswordSaga';
+import passwordResetReducer from '../redux/reducers/PasswordResetSlice';
+import passwordResetSaga from '../redux/sagas/PasswordResetSaga';
 
 import useStatusMessages from '@shared/hooks/useStatusMessages';
 import WithReducerAndSaga from '@shared/hocs/WithReducerAndSaga';
@@ -26,10 +26,10 @@ const ResetPasswordForm: React.FC = () => {
 
   const email = params.get('email');
 
-  const { loading } = useAppSelector((state) => state.forgotPassword);
+  const { loading } = useAppSelector((state) => state.passwordReset);
 
   useStatusMessages({
-    selector: (state) => state.forgotPassword,
+    selector: (state) => state.passwordReset,
     onClearStatus() {
       dispatch(clearStatus());
     },
@@ -79,7 +79,7 @@ const ResetPasswordForm: React.FC = () => {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue('newPassword') === value) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error('Las contraseñas no coinciden'));
@@ -107,15 +107,15 @@ const ResetPasswordForm: React.FC = () => {
   );
 };
 
-const EnhancedForgotPasswordForm = WithInjectionCheck(ResetPasswordForm, {
+const EnhancedResetPasswordForm = WithInjectionCheck(ResetPasswordForm, {
   SkeletonComponent: () => <ResetPasswordFormSkeleton />,
 });
 
 export default WithReducerAndSaga({
-  key: 'forgotPassword',
-  reducer: forgotPasswordReducer,
-  saga: forgotPasswordSaga,
-  ejectKey: 'forgotPassword',
+  key: 'passwordReset',
+  reducer: passwordResetReducer,
+  saga: passwordResetSaga,
+  ejectKey: 'passwordReset',
 })((props) => (
-  <EnhancedForgotPasswordForm {...props} isInjected={props.isInjected} />
+  <EnhancedResetPasswordForm {...props} isInjected={props.isInjected} />
 ));
