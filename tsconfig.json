@@ -14,7 +14,7 @@
     "baseUrl": ".",
     "paths": {
       "@shared/*": ["src/shared/*"],
-      "@domains/*": ["src/domains/*"],
+      "@boundedContext/*": ["src/boundedContext/*"],
       "@redux/*": ["src/app/redux/*"]
     },
     "noEmit": true,

@@ -8,7 +8,7 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import {
   logoutRequest,
   clearInitialAuthCheck,
-} from '@domains/auth/redux/reducers/authSlice';
+} from 'src/boundedContext/auth/redux/reducers/authSlice';
 import { useAppDispatch, useAppSelector } from 'src/app/redux/store';
 
 import { DownSquareOutlined } from '@ant-design/icons';

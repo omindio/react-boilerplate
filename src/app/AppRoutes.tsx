@@ -1,14 +1,14 @@
 import React, { lazy, Suspense } from 'react';
 import { useRoutes, Navigate } from 'react-router-dom';
 
-import AuthGuard from '@domains/auth/guards/AuthGuard';
-import AuthCheckWrapper from '@domains/auth/components/AuthCheckWrapper';
-import AuthRoutes from '@domains/auth/routes/AuthRoutes';
-import DashboardRoutes from '@domains/dashboard/routes/DashboardRoutes';
-import ProfileRoutes from '@domains/user/profile/routes/ProfileRoutes';
+import AuthGuard from 'src/boundedContext/auth/guards/AuthGuard';
+import AuthCheckWrapper from 'src/boundedContext/auth/components/AuthCheckWrapper';
+import AuthRoutes from 'src/boundedContext/auth/routes/AuthRoutes';
+import DashboardRoutes from 'src/boundedContext/dashboard/routes/DashboardRoutes';
+import ProfileRoutes from 'src/boundedContext/user/profile/routes/ProfileRoutes';
 
 const UnauthorizedPage = lazy(
-  () => import('@domains/auth/pages/UnauthorizedPage')
+  () => import('src/boundedContext/auth/pages/UnauthorizedPage')
 );
 const NotFoundPage = lazy(() => import('@shared/pages/NotFoundPage'));
 
